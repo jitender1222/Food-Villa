@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {swiggy_api_URL} from "../config"
 import Card from "./Card";
 import Shimmer from "./Shimmer";
+import filterData from "../utils/filterData";
 
 
 const Body=()=>{
@@ -10,13 +11,6 @@ const Body=()=>{
     const [searchData,setSearchData]=useState([]);
     const [searchText,setSearchText]=useState();
     const [error,setError]=useState(false);
-
-    const filterData=(searchText,rest)=>{
-        const filteredData=rest.filter((item)=>
-            item?.data?.name.toLowerCase().includes(searchText)
-        )
-        return filteredData;
-    }
 
     const search=(searchText,restaurant)=>{
 
