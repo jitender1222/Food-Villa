@@ -4,6 +4,8 @@ import Card from "./Card";
 import Shimmer from "./Shimmer";
 import filterData from "../utils/filterData";
 
+import { Link } from "react-router-dom";
+
 
 const Body=()=>{
 
@@ -68,8 +70,8 @@ const Body=()=>{
         {
             error ? <div class="text-3xl font-bold mt-10 text-center text-orange-400">OOPS!! Item Not Found....</div> : <div class="flex flex-wrap justify-center mt-14">
             {searchData.map((item)=>(
-               <Card imgId={item?.data?.cloudinaryImageId} name={item?.data?.name} cusion={item?.data?.cuisines} cost={item?.data?.costForTwoString} rating={item?.data?.avgRating} key={item?.data?.id} time={item?.data?.slaString} discount={item?.data?.aggregatedDiscountInfo?.header} />
-           ))}
+               <Link to={"/restaurant/"+item.data.id} ><Card imgId={item?.data?.cloudinaryImageId} name={item?.data?.name} cusion={item?.data?.cuisines} cost={item?.data?.costForTwoString} rating={item?.data?.avgRating} key={item?.data?.id} time={item?.data?.slaString} discount={item?.data?.aggregatedDiscountInfo?.header} />
+           </Link>))}
        </div>
         }
         </>
