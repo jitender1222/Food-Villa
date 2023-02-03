@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {swiggy_api_URL} from "../config"
 import Card from "./Card";
+import Shimmer from "./Shimmer";
 
 
 const Body=()=>{
@@ -8,6 +9,7 @@ const Body=()=>{
     const [restaurant,setRestaurant]=useState([]);
     const [searchData,setSearchData]=useState([]);
     const [searchText,setSearchText]=useState();
+    const [error,setError]=useState(false);
 
     const filterData=(searchText,rest)=>{
         const filteredData=rest.filter((item)=>
@@ -22,7 +24,20 @@ const Body=()=>{
 
             const data=filterData(searchText,restaurant);
 
+            if(data.length>0){    
+            console.log("inside the data found");
+            console.log(data);
             setSearchData(data);
+            setError(false);
+            console.log(error)
+            }
+
+            else{
+                console.log("data not found");
+                setError(true);
+                console.log(error);
+            }
+
         }
     }
 
@@ -39,7 +54,7 @@ const Body=()=>{
 
     console.log(searchData);
 
-    return (
+    return searchData.length===0 ? <Shimmer /> : (
         <>
 
         {/* added a input field */}
@@ -56,12 +71,13 @@ const Body=()=>{
         </div>
 
         {/* show the data */}
-
-        <div class="flex flex-wrap justify-center mt-14">
+        {
+            error ? <div class="text-3xl font-bold mt-10 text-center text-orange-400">OOPS!! Item Not Found....</div> : <div class="flex flex-wrap justify-center mt-14">
             {searchData.map((item)=>(
-                <Card imgId={item?.data?.cloudinaryImageId} name={item?.data?.name} cusion={item?.data?.cuisines} cost={item?.data?.costForTwoString} rating={item?.data?.avgRating} key={item?.data?.id} time={item?.data?.slaString} discount={item?.data?.aggregatedDiscountInfo?.header} />
-            ))}
-        </div>
+               <Card imgId={item?.data?.cloudinaryImageId} name={item?.data?.name} cusion={item?.data?.cuisines} cost={item?.data?.costForTwoString} rating={item?.data?.avgRating} key={item?.data?.id} time={item?.data?.slaString} discount={item?.data?.aggregatedDiscountInfo?.header} />
+           ))}
+       </div>
+        }
         </>
     )
 }
