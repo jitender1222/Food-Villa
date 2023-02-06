@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { swiggy_cloudinary_api, swiggy_menu_url } from "../config";
+import MenuCard from "./MenuCard";
 import Shimmer from "./Shimmer";
 
 
@@ -24,24 +25,38 @@ const RestaurantMenu=()=>{
 
     return restaurantInfo===null? <Shimmer /> :  (
         <>
-        <div>
-        <img src={swiggy_cloudinary_api + restaurantInfo?.cloudinaryImageId } />   
-        <h2>{restaurantInfo?.name}</h2>
-        <h2>{restaurantInfo?.aggregatedDiscountInfo?.descriptionList.map((item)=>(
-            <p>{item?.id}{item?.meta}</p>
-        ))}</h2>
-        <h3>{restaurantInfo?.area}</h3>
+        <div class="flex bg-gray-900 p-8 justify-between text-white">
+        <img class="w-56 rounded-xl" src={swiggy_cloudinary_api + restaurantInfo?.cloudinaryImageId } />
+        <div class="flex flex-col text-center">
+        <h2 class="text-4xl font-bold font-serif">{restaurantInfo?.name}</h2>
+        <h3 class="text-start text-gray-400">{restaurantInfo?.cuisines}</h3>
+        <div class="flex text-gray-300 font-thin">
+        <h3>{restaurantInfo?.area}</h3>,
         <h3>{restaurantInfo?.city}</h3>
+        </div>
+        <div class="flex font-bold font-mono mt-2">
+        <div class="flex flex-col">
         <h3>{restaurantInfo?.avgRating}⭐</h3>
+        <h3 class="text-xs text-gray-400">{restaurantInfo?.totalRatingsString}</h3>
+        </div>|    
         <h3>{restaurantInfo?.costForTwoMsg}</h3>
         </div>
+        </div>   
+        <div class="border-2 rounded-xl">
+        <div class="text-xl text-center text-yellow-300 font-bold">OFFERS</div>
+        <h2 class="p-4">{restaurantInfo?.aggregatedDiscountInfo?.descriptionList.map((item)=>(
+            <p>{item?.id}{item?.meta}</p>
+        ))}</h2>
+        </div>
+        </div>
 
-        <h2>Menu</h2>
-        <ul>
+        <h2 class="font-serif text-3xl font-bold text-center mt-4">Menu</h2>
+        <ul class="flex justify-center flex-wrap mt-4">
             {
                 Object.values(restaurantInfo?.menu?.items).map((restaurant)=>{
-                    return (
-                        <li key={restaurant.id}>{restaurant.name}</li>
+                     return(                        
+                        <MenuCard name={restaurant.name} category={restaurant.category} 
+                        img={restaurant?.cloudinaryImageId}/>
                     )
                 })
             }
