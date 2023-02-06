@@ -15,14 +15,14 @@ const Card=({
 
     return (
         <>
-        <div class="flex flex-col w-[20%] m-4 cursor-pointer  p-6 hover:border-2">
+        <div class="flex flex-col flex-wrap w-72 p-4 mr-6 cursor-pointer hover:border-2 overflow-x-hidden">
             <div class="w-64">
             <img src={swiggy_cloudinary_api+imgId}/>
             </div>
 
             <div class="mt-2 font-serif p-2">
                 <p class="font-bold">{name}</p>
-                <p class="italic w-96">{cusion}</p>
+                <p class="italic">{cusion}</p>
                 <div class="flex justify-between text-sm mt-2">
                 <p>{cost}</p>
                 <p>{time}</p>
