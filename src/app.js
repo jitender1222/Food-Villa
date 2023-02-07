@@ -12,13 +12,18 @@ import {
 import ErrorPage from "./Components/ErrorPage";
 import Contact from "./Components/Contact";
 import About from "./Components/About";
+import RestaurantMenu from "./Components/RestaurantMenu";
+import { Provider } from "react-redux";
+import store from "./utils/store";
 
  const App=()=>{
-    return <>
+    return (
+    <Provider store={store}>
     <Header />
     <Outlet />
-
-    </>
+    <Footer />
+    </Provider>
+    )
  }
 
 const router=createBrowserRouter([
@@ -39,6 +44,10 @@ const router=createBrowserRouter([
             {
                 path:"/contact",
                 element:<Contact />
+            },
+            {
+                path:"/restaurant/:id",
+                element:<RestaurantMenu />
             }
         ]
     },
