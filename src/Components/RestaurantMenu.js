@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { swiggy_cloudinary_api, swiggy_menu_url } from "../config";
+import { addItem } from "../utils/cartSlice";
 import MenuCard from "./MenuCard";
 import Shimmer from "./Shimmer";
-
+import { useDispatch } from "react-redux";
 
 const RestaurantMenu=()=>{
 
     const {id}=useParams();
 
     const [restaurantInfo,setRestaurantInfo]=useState(null);
+
+    const dispatch=useDispatch();
+
+    const handleAddItems=()=>{
+        dispatch(addItem("Grapes"));
+    }
 
     const UrlData=async ()=>{
 
@@ -41,7 +48,10 @@ const RestaurantMenu=()=>{
         </div>|    
         <h3>{restaurantInfo?.costForTwoMsg}</h3>
         </div>
-        </div>   
+        </div> 
+        <div>
+            <button className="bg-green-100 text-black p-2 rounded-md" onClick={()=>{handleAddItems()}} >Add Items</button>
+            </div>  
         <div class="border-2 rounded-xl">
         <div class="text-xl text-center text-yellow-300 font-bold">OFFERS</div>
         <h2 class="p-4">{restaurantInfo?.aggregatedDiscountInfo?.descriptionList.map((item)=>(
